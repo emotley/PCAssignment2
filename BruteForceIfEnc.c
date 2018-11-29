@@ -98,11 +98,7 @@ unsigned long count = 0;
     char alphabet[40];
     int posn;
 
-    printf("\n********************************************************\n");
-    printf("******************Cipher Key Cracker********************\n");
-    printf("********************************************************\n");
-
-    // Take user input for choice of position of the first char of the key
+     // Take user input for choice of position of the first char of the key
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3 or 4\n");
     printf("If position not known, enter 0 for default alphabet: a-z,0-9 \n" );
