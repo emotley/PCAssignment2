@@ -189,7 +189,7 @@ int main()
 
                             count++;
 
-                            if (count%5000000 == 0)
+                            if (count%10000000 == 0)
                             {
                                printf("count %d  Thread %d is trying key  %s\n", count, thread_id, key);
                             }
