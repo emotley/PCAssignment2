@@ -137,8 +137,10 @@ int main()
         printf ("Not a valid input. Run program again\n");
         return 1; //exit program
     }
+	
+	
     int s = strlen(alphabet);
-   // printf("\nalphabet: %s\tLength is %d\n", alphabet, s);  
+    printf("\nalphabet: %s\tLength is %d\n", alphabet, s);  
     
 	clock_t start = clock(); // start the timer
         printf("timer started...\n");
