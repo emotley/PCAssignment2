@@ -80,13 +80,18 @@ int main(int argc, char *argv[])
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
     printf("********************************************************\n");
+    
+
+    int id, procs;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank (MPI_COMM_WORLD, &id);
+    MPI_Comm_size (MPI_COMM_WORLD, &procs);
+    
     unsigned long count = 0;
     int i,j,k,l,m,n,q;
     char key[18];
-
-    int id, procs;
-
-
+    
+    
     /* A 128 bit IV */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
     /* Original CipherText */
@@ -104,9 +109,8 @@ int main(int argc, char *argv[])
     int posn;
 
     
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank (MPI_COMM_WORLD, &id);
-    MPI_Comm_size (MPI_COMM_WORLD, &procs);
+   
+   
     
     
     // Take user input for choice of position of the first char of the key
