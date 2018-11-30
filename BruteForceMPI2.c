@@ -90,6 +90,8 @@ int main(int argc, char *argv[])
     unsigned long count = 0;
     int i,j,k,l,m,n,q;
     char key[18];
+    int solutions;
+    int global_solutions;
     
     
     /* A 128 bit IV */
@@ -116,7 +118,11 @@ int main(int argc, char *argv[])
     printf("timer started...\n\n");
 
 
-
+solutions = 0;
+    for (int v = id; v< 2176782336; v += procs);
+    
+    
+    
     for (i = 0; i< s; i++)
     {
         for (j = 0; j< s; j++)
