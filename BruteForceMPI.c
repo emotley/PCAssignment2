@@ -104,8 +104,7 @@ int main(int argc, char *argv[])
     int posn;
 
     
-    //MPI_Init(&argc, &argv);
-    MPI_Init;
+    MPI_Init(&argc, &argv);
     MPI_Comm_rank (MPI_COMM_WORLD, &id);
     MPI_Comm_size (MPI_COMM_WORLD, &procs);
     
@@ -143,7 +142,7 @@ int main(int argc, char *argv[])
     else
     {
         printf ("Not a valid input. Run program again\n");
-        return 1; //exit program
+        //return 1; //exit program
     }
 
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
