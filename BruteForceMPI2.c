@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
 
-    char alphabet[] = "apbcpdefghijklmnoqrstuvwxyz0123456789";
+    char alphabet[] = "apbcdw5";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     
     int s = strlen(alphabet);
     
-if(id ==0) // only process 0 prints the alphabet
+    if(id ==0) // only process 0 prints the alphabet
     {
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     printf("\nlength of alphabet: %d\n",s);
