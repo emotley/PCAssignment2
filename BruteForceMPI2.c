@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
 
-    char alphabet[] = "pabcpdefghijklmnoqrstuvwxyz0123456789";
+    char alphabet[] = "apbcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
