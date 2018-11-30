@@ -75,7 +75,7 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
  *  Main function
  *************************************************************************/
 
-int main(int arg, char *argv[])
+int main(int argc, char *argv[])
 {
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
