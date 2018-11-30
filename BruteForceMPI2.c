@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     printf("\nlength of alphabet: %d\n",s);
     printf("timer started...\n\n");
-}
+    }
     clock_t start = clock(); // start the timer
     
 
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
         }
     }
 
-}
+
     MPI_Finalize();
 
 
