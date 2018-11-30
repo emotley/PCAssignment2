@@ -6,10 +6,11 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <string.h>
+#include <mpi.h.>
 //#define MAXCHAR 1000
 
 
-/* BruteForceEnc1.c    November 2018
+/* BruteforceRecMPI.c    November 2018
 *  Program to generate a series of potential keys using a recursive function, of up to length k 
 *  from an alphabet of length n, then padded to a total of 16 Bytes, where it can then be used 
 *   to crack a ciphertext by Brute Force using  AES-128-CBC encryption, where the IV is known. */
@@ -164,10 +165,10 @@ int genKeys(char alphabet[], char prefix[], int n, int k)
  *************************************************************************/
 
 
-int main()
+int main(int argc, char *argv[])
 {
     int k=6;
-    //char alphabet[] = "abcpdefghijkjlmnoqrstuvwxyz0123456789"; // if 1st char of key is known, can posn this at beg of alphabet.
+    char alphabet[] = "abcpdefghijkjlmnoqrstuvwxyz0123456789"; // if 1st char of key is known, can posn this at beg of alphabet.
     //char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     //char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     //char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
@@ -198,7 +199,7 @@ int main()
     
    for (v= id; v< 2176782336; v = v+ procs)
 	
-	solutions += genKeys(id,v);
+	//lutions += genKeys(id,v);
     genKeys(alphabet,"",n,k); // calls the generate keys function and tries to match input string
     // note that initial prefix is an empty string ""
 
