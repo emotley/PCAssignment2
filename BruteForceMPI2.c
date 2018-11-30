@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 // divide the task between the processes
   //  solutions = 0;
     int v;
-    for (v = id; v< 2176782336; v =  v + procs);
+    for (v = id; v< 2176782336; v++);
     {
     
     
