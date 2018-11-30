@@ -6,7 +6,7 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <string.h>
-#include <mpi.h.>
+#include <mpi.h>
 //#define MAXCHAR 1000
 
 
