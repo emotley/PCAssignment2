@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 
                             if (count%10000000 == 0)
                             {
-                                printf("count %lu  trying key  %s\n", count, key);
+                                printf("Process %d  trying key  %s\n", id, key);
                             }
 
                             /* *************************************************************************************************************
