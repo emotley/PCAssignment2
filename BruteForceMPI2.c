@@ -130,9 +130,9 @@ if(id ==0) // only process 0 prints the alphabet
 
 // divide the task between the processes
   //  solutions = 0;
-   // int v;
-    //for (v = id; v< 2176782336; v += procs);
-  //  {
+    int v;
+    for (v = id; v< 2176782336; v =  v + procs);
+    {
     
     
     for (i = 0; i< s; i++)
@@ -197,7 +197,7 @@ if(id ==0) // only process 0 prints the alphabet
         }
     }
 
-//}
+}
     MPI_Finalize;
 
 
