@@ -130,12 +130,12 @@ int main(int argc, char *argv[])
 
 // divide the task between the processes
   //  solutions = 0;
-    int v;
-    for (v = id; v< 2176782336; v++);
-    {
+   
     
+    //for (i = 0; i< s; i++)
+    // divide outer loop between no. of processes
+    for (i = id; i < s; i = i+procs)
     
-    for (i = 0; i< s; i++)
     {
         for (j = 0; j< s; j++)
         {
@@ -198,7 +198,7 @@ int main(int argc, char *argv[])
     }
 
 }
-    MPI_Finalize;
+    MPI_Finalize();
 
 
 
