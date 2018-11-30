@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
     //char alphabet[40];
     //int posn;
     int n = strlen(alphabet);
-	int solutions =0;
+	int v, solutions =0;
 	
     int id, procs;
     MPI_Init(&argc, &argv);
