@@ -103,6 +103,12 @@ int main(int argc, char *argv[])
     char alphabet[40];
     int posn;
 
+    
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank (MPI_COMM_WORLD, &id);
+    MPI_Comm_size (MPI_COMM_WORLD, &procs);
+    
+    
     // Take user input for choice of position of the first char of the key
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3 or 4\n");
@@ -145,15 +151,6 @@ int main(int argc, char *argv[])
 
     clock_t start = clock(); // start the timer
     printf("timer started...\n\n");
-
-
-
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank (MPI_COMM_WORLD, &id);
-    MPI_Comm_size (MPI_COMM_WORLD, &procs);
-
-
-
 
 
 
