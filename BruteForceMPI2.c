@@ -197,7 +197,7 @@ if(id ==0) // only process 0 prints the alphabet
         }
     }
 
-    }
+//}
     MPI_Finalize;
 
 
