@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 
 solutions = 0;
     for (int v = id; v< 2176782336; v += procs);
-    
+    {
     
     
     for (i = 0; i< s; i++)
@@ -184,7 +184,7 @@ solutions = 0;
         }
     }
 
-
+    }
     MPI_Finalize;
 
 
