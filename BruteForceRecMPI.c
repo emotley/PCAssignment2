@@ -168,62 +168,37 @@ int main()
 {
     int k=6;
     //char alphabet[] = "abcpdefghijkjlmnoqrstuvwxyz0123456789"; // if 1st char of key is known, can posn this at beg of alphabet.
-    char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
-    char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
-    char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
-    char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
-    char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
-    char alphabet[40];
-    int posn;
-
+    //char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
+    //char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
+    //char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
+    //char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
+    //char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    //char alphabet[40];
+    //int posn;
+    int n = strlen(alphabet);
+	int solutions =0;
+	
+    int id, procs;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank (MPI_COMM_WORLD, &id);
+    MPI_Comm_size (MPI_COMM_WORLD, &procs);
+	
+	if (id==0)
+	{
     printf("\n********************************************************\n");
     printf("******************Cipher Key Cracker********************\n");
     printf("********************************************************\n");
+    printf("\nalphabet: %s", alphabet);  // print chosen alphabet	
+    printf("\ntimer started...\n\n");	
+		
+	}
 
-    // Take user input for choice of position of the first char of the key
-    printf("In the search alphabet, what is the position of the first char of the key?\n");
-    printf("Please enter 1,2,3 or 4\n");
-    printf("If position not known, enter 0 for default alphabet: a-z,0-9 \n" );
-    scanf("%d", &posn);
-
-    if (posn ==1)
-    {
-        strcpy(alphabet, alphabet1);
-    }
-    else if (posn ==2)
-    {
-        strcpy(alphabet, alphabet2);
-    }
-
-    else if (posn ==3)
-    {
-        strcpy(alphabet, alphabet3);
-    }
-
-    else if (posn ==4)
-    {
-        strcpy(alphabet, alphabet4);
-    }
-
-    else if (posn ==0)
-    {
-        strcpy(alphabet, alphabet0);
-    }
-
-    else
-    {
-        printf ("Not a valid input. Run program again\n");
-        return 1; //exit program
-    }
-
-    printf("\nalphabet: %s", alphabet);  // print chosen alphabet
-
-
-    int n = strlen(alphabet);
 
    clock_t start = clock(); // start the timer
-    printf("\ntimer started...\n\n");
-
+    
+   for (v= id; v< 2176782336; v = v+ procs)
+	
+	solutions += genKeys(id,v);
     genKeys(alphabet,"",n,k); // calls the generate keys function and tries to match input string
     // note that initial prefix is an empty string ""
 
@@ -231,6 +206,7 @@ int main()
 
     float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
     printf("Execution time = %.4lf seconds\n\n", time_used);
+	MPI_Finalize();
 
     return 0;
 }
