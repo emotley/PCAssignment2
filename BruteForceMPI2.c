@@ -77,15 +77,23 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 
 int main(int argc, char *argv[])
 {
+    
+    
+ int id, procs;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank (MPI_COMM_WORLD, &id);
+    MPI_Comm_size (MPI_COMM_WORLD, &procs);
+    
+    
+    if(id ==0) // only process 0 prints the header
+    {
+    
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
     printf("********************************************************\n");
     
-
-    int id, procs;
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank (MPI_COMM_WORLD, &id);
-    MPI_Comm_size (MPI_COMM_WORLD, &procs);
+    }
+    
     
     unsigned long count = 0;
     int i,j,k,l,m,n,q;
@@ -101,7 +109,7 @@ int main(int argc, char *argv[])
     /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
 
-    char alphabet[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
+    char alphabet[] = "pbcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
@@ -117,9 +125,10 @@ int main(int argc, char *argv[])
     clock_t start = clock(); // start the timer
     printf("timer started...\n\n");
 
-
-solutions = 0;
-    for (int v = id; v< 2176782336; v += procs);
+// divide the task between the processes
+    solutions = 0;
+    int v;
+    for (v = id; v< 2176782336; v += procs);
     {
     
     
@@ -173,8 +182,9 @@ solutions = 0;
                                 clock_t end = clock(); // stop the timer
                                 float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
                                 printf("Execution time = %.4lf seconds\n\n", time_used);
-
-                                return(0);
+                                return(0);  // exit the for loops
+                                
+                                
                             }
 
                         }
