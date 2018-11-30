@@ -117,19 +117,22 @@ int main(int argc, char *argv[])
     char alphabet0[] = "abcdefghipjklmnoqrstuvwxyz0123456789";
     //char alphabet[40];
     
-
-    printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     int s = strlen(alphabet);
+    
+if(id ==0) // only process 0 prints the alphabet
+    {
+    printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     printf("\nlength of alphabet: %d\n",s);
-
-    clock_t start = clock(); // start the timer
     printf("timer started...\n\n");
+}
+    clock_t start = clock(); // start the timer
+    
 
 // divide the task between the processes
-    solutions = 0;
-    int v;
-    for (v = id; v< 2176782336; v += procs);
-    {
+  //  solutions = 0;
+   // int v;
+    //for (v = id; v< 2176782336; v += procs);
+  //  {
     
     
     for (i = 0; i< s; i++)
