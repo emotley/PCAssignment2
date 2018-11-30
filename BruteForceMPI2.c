@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
                             key[16] = '\0';
                             count++;
 
-                            if (count%10000000 == 0)
+                            if (count%25000000 == 0)
                             {
                                 printf("Process %d  trying key  %s\n", id, key);
                             }
