@@ -9,7 +9,7 @@
 #include <mpi.h>
 
 
-/* BruteForceMPI.c    November 2018
+/* BruteForceMPI2.c    November 2018
  * Program using distributed memory parallelization (MPI)to generate a series of potential keys
  * using nested if statements, of length 6 (padded to 16B)from an alphabet of length n.
  * Keys are then sucessively tried using AES-128-CBC encryption with known IV and resultant ciphertext,
@@ -99,55 +99,14 @@ int main(int argc, char *argv[])
     /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
 
-
+    char alphabet[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet0[] = "abcdefghipjklmnoqrstuvwxyz0123456789";
-    char alphabet[40];
-    int posn;
-
+    //char alphabet[40];
     
-   
-   
-    
-    
-    // Take user input for choice of position of the first char of the key
-    printf("In the search alphabet, what is the position of the first char of the key?\n");
-    printf("Please enter 1,2,3 or 4\n");
-    printf("If position not known, enter 0 for default alphabet: a-z,0-9 \n" );
-    scanf("%d", &posn);
-
-    if (posn ==1)
-    {
-        strcpy(alphabet, alphabet1);
-    }
-    else if (posn ==2)
-    {
-        strcpy(alphabet, alphabet2);
-    }
-
-    else if (posn ==3)
-    {
-        strcpy(alphabet, alphabet3);
-    }
-
-    else if (posn ==4)
-    {
-        strcpy(alphabet, alphabet4);
-    }
-
-    else if (posn ==0)
-    {
-        strcpy(alphabet, alphabet0);
-    }
-
-    else
-    {
-        printf ("Not a valid input. Run program again\n");
-        //return 1; //exit program
-    }
 
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     int s = strlen(alphabet);
