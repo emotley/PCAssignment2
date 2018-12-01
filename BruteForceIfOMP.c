@@ -77,7 +77,7 @@ int main()
 {
     int i,j,k,l,m,n,q, thread_id, nthreads,nt, count = 0;
     char key[18];
-    float time_used = 0;
+    float time_used1 = 0, time_used2 = 0;
     int chunk = CHUNKSIZE;
     double end;
 	
