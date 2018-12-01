@@ -8,17 +8,16 @@
 #include <string.h>
 
 
-/* BruteForceIfEnc.c    November 2018
+/* BruteForceIf.c    November 2018
  * Program to generate a series of potential keys using nested if statements, of length 6
  * from an alphabet of length n, then padded to a total of 16 Bytes, where it can then be used 
  * to Brute Force a ciphertext using AES-128-CBC encryption, where the IV is known. */
 
 
-/* initialise global variables*/
+/* Global variables initialised first*/
 int len;
 int ciphertext_len;
 unsigned char ciphertext[64];
-
 
 /* ***************************************************************
  * error handling function
@@ -77,31 +76,38 @@ int main()
 {
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
-    printf("********************************************************\n");
-unsigned long count = 0;
-    int i,j,k,l,m,n,q;
+    printf("********************************************************\n\n");
+	
+    // First clock started
+     clock_t start1 = clock(); // start the timer
+     printf("timer1 started...\n\n");
+		
+    /* Initialise most of the variables */	
+    unsigned long count = 0;
+    int i,j,k,l,m,n,q,posn;
     char key[18];
     
-    /* A 128 bit IV */
+	
+    /* Hardcoding the IV, Ciphertext and Plaintext. 
+     * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
+     * Program could be modified to be taken as user inputs.
+     */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
-    /* Original CipherText */
     unsigned char *cipherorig = "\x5f\x44\x29\xbb\xed\x0c\xbb\xa0\x46\x2f\x1e\xfa\x19\xbd\x7a\x2e\xea\x19\x3f\x50\x35\xb9\xba\x91\xa2\x7e\x85\x37\xb6\x5f\x95\x35";
-    /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
     
-    
+    /* Selection of alphabets for user selection for testing purposes. Position of first character of key changes in each. */
+    char alphabet8[] = "abcdefgphijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
     char alphabet[40];
-    int posn;
-
-     // Take user input for choice of position of the first char of the key
+   
     printf("In the search alphabet, what is the position of the first char of the key?\n");
-    printf("Please enter 1,2,3 or 4\n");
-    printf("If position not known, enter 0 for default alphabet: a-z,0-9 \n" );
+    printf("Please enter 1,2,3,4 or 8\n");
+    printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
     scanf("%d", &posn);
 
     if (posn ==1)
@@ -122,7 +128,12 @@ unsigned long count = 0;
     {
         strcpy(alphabet, alphabet4);
     }
-
+    
+    else if (posn ==8)
+    {
+        strcpy(alphabet, alphabet4);
+    }
+	
     else if (posn ==0)
     {
         strcpy(alphabet, alphabet0);
@@ -134,14 +145,15 @@ unsigned long count = 0;
         return 1; //exit program
     }
 
+    int s = strlen(alphabet); // now alphabet is chosen can initialise s.	
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
-    int s = strlen(alphabet);
     printf("\nlength of alphabet: %d\n",s);
 
-    clock_t start = clock(); // start the timer
-    printf("timer started...\n\n");
+    clock_t start2 = clock(); // start the timer for execution time of main process 
+    printf("timer2 started...\n\n");
 
-
+/* Everything is now initialised, so the process of generating keys and encryption with those keys can begin */
+    
     for (i = 0; i< s; i++)
     {
         for (j = 0; j< s; j++)
@@ -160,14 +172,14 @@ unsigned long count = 0;
                             key[3] = alphabet[l];
                             key[4] = alphabet[m];
                             key[5] = alphabet[n];
-                            for (q = 6; q < 16; q++)
+                            for (q = 6; q < 16; q++) // add padding
                             {
                                 key[q] = '#';
                             }
                             key[16] = '\0';
                             count++;
 
-                            if (count%10000000 == 0)
+                            if (count%10000000 == 0) 
                             {
                                 printf("count %lu  trying key  %s\n", count, key);
                             }
@@ -190,9 +202,11 @@ unsigned long count = 0;
 
 				
 				clock_t end = clock(); // stop the timer
-				float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
-    				printf("Execution time = %.4lf seconds\n\n", time_used);
-
+				float time_used1 = (float)(end - start1)/ CLOCKS_PER_SEC;
+				float time_used2 = (float)(end - start2)/ CLOCKS_PER_SEC;    
+				    
+    				printf("Execution time of full program = %.4lf seconds\n", time_used1);
+                                printf("Execution time of logical process = %.4lf seconds\n\n", time_used2);
                                 return(0);
                             }
 
@@ -204,8 +218,7 @@ unsigned long count = 0;
     }
 
     clock_t end = clock(); // stop the timer
-
-    float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
+    float time_used = (float)(end - start1)/ CLOCKS_PER_SEC;
     printf("Execution time = %.4lf seconds\n\n", time_used);
 
     return 0;
