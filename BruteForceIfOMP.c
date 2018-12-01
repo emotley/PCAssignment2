@@ -82,7 +82,7 @@ int main()
     double end;
 	
 	
-     double start1a = omp_get_wtime( );  
+      
 	clock_t start1 = clock(); // note clock reading
         printf("\ntimer1 started...\n");
 
@@ -115,6 +115,10 @@ int main()
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
     scanf("%d", &posn);
+	
+     double start1 = omp_get_wtime( ); 
+     printf("Timer1 started...\n");
+	
 
     if (posn ==1)
     {
@@ -152,10 +156,7 @@ int main()
 	
     int s = strlen(alphabet);
     printf("\nalphabet: %s\tLength is %d\n", alphabet, s);  
-    
-	clock_t start2 = clock(); // note clock reading
-        printf("timer2 started...\n");
-
+    	
      #pragma omp parallel shared(alphabet,count,chunk,start2) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(nt)
     {
 	  omp_set_dynamic(0);
@@ -168,7 +169,8 @@ int main()
           printf("Total threads - %d\n", nthreads);
         }
 
-	    double start = omp_get_wtime( );  
+   double start2 = omp_get_wtime( );
+   printf("Timer2 started...\n");
       
    #pragma omp for schedule(dynamic, chunk) nowait
         
@@ -223,21 +225,17 @@ int main()
                                 printf("******************************************************************************\n");
  				
 				double end = omp_get_wtime( );    
-    				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start, end, end - start);  
-				printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n", start1a, end, end - start1a); 
+    				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start2, end, end - start2);  
+				printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n", start1, end, end - start1); 
 				
-				end = clock(); // stop the timer
-				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC;
-    				printf("Execution time = %.4lf seconds\n\n", time_used2);
+				//end = clock(); // stop the timer
+				//time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC;
+    				//printf("Execution time = %.4lf seconds\n\n", time_used2);
 				    
-				time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC;
-    				printf("Execution time = %.4lf seconds\n\n", time_used1);    
+				//time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC;
+    				//printf("Execution time = %.4lf seconds\n\n", time_used1);    
 				 
-				    
-				    
-				    
-				    
-				exit(0);
+				exit(0);  // can't use return statements in OMP, so have to exit 
                              }
 		 }
 		}
@@ -250,13 +248,13 @@ int main()
 		}
 
 		}
-
+    printf("No key found\n");
+    double end2 = omp_get_wtime( );
+     printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n", start1, end2, end2 - start1);
+	
   //  clock_t end2 = clock(); // stop the timer
-
   //  float time_used2 = (float)(end2 - start)/ CLOCKS_PER_SEC;
     //printf("Execution time = %.4lf seconds\n\n", time_used2);
-
-  //  printf("No key found\n");
-
+   
     return 0;
 }
