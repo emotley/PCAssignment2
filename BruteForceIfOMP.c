@@ -81,10 +81,12 @@ int main()
     int chunk = CHUNKSIZE;
     double end, start1, start2;
 	
-	
+    printf("\n*******************************************************************************\n");
+    printf("******************************Cipher Key Cracker*******************************\n");
+    printf("*******************************************************************************\n");	
       
-	clock_t start1 = clock(); // note clock reading
-        printf("\ntimer1 started...\n");
+	//clock_t start1 = clock(); // note clock reading
+        //printf("\ntimer1 started...\n");
 
     /* A 128 bit IV */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
@@ -102,11 +104,6 @@ int main()
     char alphabet[40];
     int posn;
  
-
-    printf("\n*******************************************************************************\n");
-    printf("******************************Cipher Key Cracker*******************************\n");
-    printf("*******************************************************************************\n");
-
     // Take user input for choice of position of the first char of the key and no. of threads
 	
     printf("how many threads?\n");
