@@ -80,11 +80,11 @@ int main()
     float time_used1 = 0, time_used2 = 0;
     int chunk = CHUNKSIZE;
     double end;
-	double start1a = omp_get_wtime( );  
+	
+	
+     double start1a = omp_get_wtime( );  
 	clock_t start1 = clock(); // note clock reading
-        printf("timer1 started...\n");
-
-
+        printf("\ntimer1 started...\n");
 
     /* A 128 bit IV */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
@@ -109,8 +109,8 @@ int main()
 
     // Take user input for choice of position of the first char of the key and no. of threads
 	
-	printf("how many threads?\n");
-	scanf("%d", &nt);
+    printf("how many threads?\n");
+    scanf("%d", &nt);
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
@@ -170,10 +170,7 @@ int main()
 
 	    double start = omp_get_wtime( );  
       
-   
-	    
-	    
-#pragma omp for schedule(dynamic, chunk) nowait
+   #pragma omp for schedule(dynamic, chunk) nowait
         
    for (i = 0; i< s; ++i)
     {
@@ -227,7 +224,7 @@ int main()
  				
 				double end = omp_get_wtime( );    
     				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start, end, end - start);  
-				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start1a, end, end - start1a); 
+				printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n", start1a, end, end - start1a); 
 				
 				end = clock(); // stop the timer
 				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC;
