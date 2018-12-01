@@ -158,18 +158,21 @@ int main()
 
      #pragma omp parallel shared(alphabet,count,chunk,start2) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(nt)
     {
-	omp_set_dynamic(0);
+	  omp_set_dynamic(0);
 	  omp_set_num_threads(2);   
-	    thread_id = omp_get_thread_num();
+	  thread_id = omp_get_thread_num();
        
-	 //nthreads = omp_get_num_threads();   
-         //nthreads = 2;
-        if (thread_id ==0)  // get info from master thread
+	if (thread_id ==0)  // get info from master thread
         {
           nthreads = omp_get_num_threads();
           printf("Total threads - %d\n", nthreads);
         }
 
+	    double start = omp_get_wtime( );  
+      
+   
+	    
+	    
 #pragma omp for schedule(dynamic, chunk) nowait
         
    for (i = 0; i< s; ++i)
@@ -221,16 +224,20 @@ int main()
                                 printf("           Success!! The key is  %s\n\n", key);
 				printf("           Found by thread %d.   No of threads: %d\n", thread_id, nthreads);
                                 printf("******************************************************************************\n");
-
+ 				
+				double end = omp_get_wtime( );    
+    				printf_s("start = %.16g\nend = %.16g\ndiff = %.16g\n", start, end, end - start);  
+				
 				
 				end = clock(); // stop the timer
 				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC/nthreads;
     				printf("Execution time = %.4lf seconds\n\n", time_used2);
 				    
-				    
-				
 				time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC/nthreads;
     				printf("Execution time = %.4lf seconds\n\n", time_used1);    
+				 
+				    
+				    
 				    
 				    
 				exit(0);
