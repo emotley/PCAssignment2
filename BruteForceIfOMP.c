@@ -127,7 +127,10 @@ int main()
     {
         strcpy(alphabet, alphabet4);
     }
-
+    else if (posn ==8)
+    {
+        strcpy(alphabet, alphabet8);
+    }
     else if (posn ==0)
     {
         strcpy(alphabet, alphabet0);
