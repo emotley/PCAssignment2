@@ -70,7 +70,7 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 
 /* ************************************************************************************************
 *   genKeys function
-*   Generates all the possible permutations (keys) up to length k from a given alphabet of size n
+*   Generates all the possible permutations (keys) up to length k from a given alphabet of size s
 *   then uses each generated key in turn in the encrypt function. Each new ciphertext is then tested
 *   against the original for a match. Function exits when a match is found.
 *****************************************************************************************************/
@@ -78,19 +78,19 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 
 static unsigned long count=0;
 
-int genKeys(char alphabet[], char prefix[], int n, int k)
+int genKeys(char alphabet[], char prefix[], int s, int k)
 
 {
     int i,j,len=strlen(prefix);
     char newprefix[len+2];
     char key [20]; 	// keys is only 16B, but set larger to accommodate null terminating character
 
-
-    /* A 128 bit IV */
+    /* Hardcoding the IV, Ciphertext and Plaintext. 
+     * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
+     * Program could be modified to be taken as user inputs.
+     */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
-    /* Original CipherText */
     unsigned char *cipherorig = "\x5f\x44\x29\xbb\xed\x0c\xbb\xa0\x46\x2f\x1e\xfa\x19\xbd\x7a\x2e\xea\x19\x3f\x50\x35\xb9\xba\x91\xa2\x7e\x85\x37\xb6\x5f\x95\x35";
-    /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
 
 
@@ -99,9 +99,9 @@ int genKeys(char alphabet[], char prefix[], int n, int k)
         return 1; 	// returns unsuccessful if key is of length 0.
     }
 
-    for(i=0; i<n; i++)  // loop through alphabet array (ideal place for openMPI parallisation)
+    for(i=0; i<s; i++)  // loop through alphabet array 
     {
-        /*Concatenation of currentPrefix + alphabet[i] = newPrefix*/
+        /* Concatenation of currentPrefix + alphabet[i] = newPrefix */
         for(j=0; j<len; j++)
         {
             newprefix[j] = prefix[j];
@@ -117,24 +117,19 @@ int genKeys(char alphabet[], char prefix[], int n, int k)
         {
             key[q] = '#';
         }
-        key[q] = '\0'; 		// add null terminator for printing correctly
-        count++;
-        //  printf("%lu  Trying key   %s\n", count, key);
+        key[q] = '\0'; 		// add null terminator
+        count++; // increase the count
+	    
+        if (count%25000000 == 0) // don't print all attempts!
+         {
+          printf("count %lu  trying key  %s\n", count, key);
+         }
 
-	if (count%10000000 == 0)
-                            {
-                                printf("count %lu  trying key  %s\n", count, key);
-                            }
-
-
-
-        /* *************************************************************************************************************
-        * Use generated key in encryption function to produce new ciphertext, then check for match with orig ciphertext
+       /* *************************************************************************************************************
+        * Use each generated key in encryption function to produce new ciphertext, then check for match with orig ciphertext
         ****************************************************************************************************************/
         ciphertext_len = encrypt(plaintext, strlen ((char *)plaintext), key, iv, ciphertext);
-        /* **************************************************************************************************************
-        *****************************************************************************************************************/
-
+        
 
         /* Compare the original ciphertext with new ciphertext, exit if a match */
         int result;
@@ -142,7 +137,6 @@ int genKeys(char alphabet[], char prefix[], int n, int k)
         if (result == 0)
         {
             printf("Count %lu Cipherorig and Ciphertext match\n", count);
-            // printf("The original plaintext is  \"%s\"\n", decryptedtext);
             printf("***************************************************\n\n");
             printf("Success!! The key is  %s\n\n", key);
             printf("***************************************************\n");
@@ -169,7 +163,8 @@ int genKeys(char alphabet[], char prefix[], int n, int k)
 int main()
 {
     int k=6;
-    //char alphabet[] = "abcpdefghijkjlmnoqrstuvwxyz0123456789"; // if 1st char of key is known, can posn this at beg of alphabet.
+    /* User selection of alphabets for testing purposes. Position of first character of key changes in each. */
+    char alphabet8[] = "abcdefgphijklmnoqrstuvwxyz0123456789"; 
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
@@ -182,10 +177,11 @@ int main()
     printf("******************Cipher Key Cracker********************\n");
     printf("********************************************************\n");
 
-    // Take user input for choice of position of the first char of the key
+   	
+    // Take user input for alphabet order
     printf("In the search alphabet, what is the position of the first char of the key?\n");
-    printf("Please enter 1,2,3 or 4\n");
-    printf("If position not known, enter 0 for default alphabet: a-z,0-9 \n" );
+    printf("Please enter 1,2,3, 4 or 8\n");
+    printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
     scanf("%d", &posn);
 
     if (posn ==1)
@@ -207,6 +203,10 @@ int main()
         strcpy(alphabet, alphabet4);
     }
 
+    else if (posn ==8)
+    {
+        strcpy(alphabet, alphabet8);
+    }
     else if (posn ==0)
     {
         strcpy(alphabet, alphabet0);
@@ -219,18 +219,15 @@ int main()
     }
 
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
+    int s = strlen(alphabet);   
 
-
-    int n = strlen(alphabet);
-
-   clock_t start = clock(); // start the timer
+    clock_t start = clock(); // start the timer
     printf("\ntimer started...\n\n");
 
-    genKeys(alphabet,"",n,k); // calls the generate keys function and tries to match input string
+    genKeys(alphabet,"",s,k); // calls the generate keys function and tries to match input string
     // note that initial prefix is an empty string ""
 
     clock_t end = clock(); // stop the timer
-
     float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
     printf("Execution time = %.4lf seconds\n\n", time_used);
 
