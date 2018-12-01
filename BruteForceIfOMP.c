@@ -225,16 +225,9 @@ int main()
                                 printf("******************************************************************************\n");
  				
 				end = omp_get_wtime( );    
-    				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start2, end, end - start2);  
-				printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n", start1, end, end - start1); 
+    				printf("OMP start time = %.11g\tOMP end time= %.11g\nOMP exe time = %.5g\n\n", start2, end, end - start2);  
+				printf("Main prog start time = %.11g\tEnd time= %.11g\nProg exe time = %.5g\n\n", start1, end, end - start1); 
 				
-				//end = clock(); // stop the timer
-				//time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC;
-    				//printf("Execution time = %.4lf seconds\n\n", time_used2);
-				    
-				//time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC;
-    				//printf("Execution time = %.4lf seconds\n\n", time_used1);    
-				 
 				exit(0);  // can't use return statements in OMP, so have to exit 
                              }
 		 }
