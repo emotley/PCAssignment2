@@ -156,12 +156,12 @@ int main()
 	  omp_set_num_threads(2);   
 	    thread_id = omp_get_thread_num();
        
-	    
-         nthreads = omp_get_num_threads();
+	 //nthreads = omp_get_num_threads();   
+         nthreads = 2;
         if (thread_id ==0)  // get info from master thread
         {
-          nthreads = omp_get_num_threads();
-          //printf("Total threads - %d\n", nthreads);
+         // nthreads = omp_get_num_threads();
+          printf("Total threads - %d\n", nthreads);
         }
 
 #pragma omp for schedule(dynamic, chunk) nowait
