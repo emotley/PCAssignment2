@@ -79,6 +79,7 @@ int main()
     char key[18];
     float time_used = 0;
     int chunk = CHUNKSIZE;
+	double end;
 
 
     /* A 128 bit IV */
@@ -142,11 +143,11 @@ int main()
     int s = strlen(alphabet);
     printf("\nalphabet: %s\tLength is %d\n", alphabet, s);  
     
-	clock_t start2 = clock(); // start the timer
+	clock_t start2 = clock(); // note clock reading
         printf("timer2 started...\n");
 
 
-     #pragma omp parallel shared(alphabet,count,chunk,start) private(i,j,k,l,m,n,key,ciphertext,thread_id, end)
+     #pragma omp parallel shared(alphabet,count,chunk,start2) private(i,j,k,l,m,n,key,ciphertext,thread_id, end)
     {
 	thread_id = omp_get_thread_num();
         nthreads = omp_get_num_threads();
