@@ -94,7 +94,7 @@ int main()
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
-    char alphabet0[] = "abcdef5pghijklmnoqrstuvwxyz012346789";
+    char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
     char alphabet[40];
     int posn;
  
