@@ -80,6 +80,10 @@ int main()
     float time_used = 0;
     int chunk = CHUNKSIZE;
     double end;
+	
+	clock_t start1 = clock(); // note clock reading
+        printf("timer1 started...\n");
+
 
 
     /* A 128 bit IV */
@@ -220,8 +224,15 @@ int main()
 
 				
 				end = clock(); // stop the timer
-				time_used = (double)(end - start2)/ CLOCKS_PER_SEC/nthreads;
-    				printf("Execution time = %.4lf seconds\n\n", time_used);
+				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC/nthreads;
+    				printf("Execution time = %.4lf seconds\n\n", time_used2);
+				    
+				    
+				
+				time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC/nthreads;
+    				printf("Execution time = %.4lf seconds\n\n", time_used1);    
+				    
+				    
 				exit(0);
                              }
 		 }
