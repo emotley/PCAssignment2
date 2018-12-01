@@ -75,26 +75,28 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 
 int main()
 {
+    printf("\n*******************************************************************************\n");
+    printf("***************Cipher Key Cracker (Parallel Version using OMP)*****************\n");
+    printf("*******************************************************************************\n");
+	
+/* Initialise variables */
     int i,j,k,l,m,n,q, thread_id, nthreads,nt, count = 0;
     char key[18];
     float time_used1 = 0, time_used2 = 0;
     int chunk = CHUNKSIZE;
     double end, start1, start2;
-	
-    printf("\n*******************************************************************************\n");
-    printf("******************************Cipher Key Cracker*******************************\n");
-    printf("*******************************************************************************\n");	
-      
-	//clock_t start1 = clock(); // note clock reading
-        //printf("\ntimer1 started...\n");
-
-    /* A 128 bit IV */
+        
+    /* Hardcoding the IV, Ciphertext and Plaintext. 
+     * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
+     * Program could be modified to be taken as user inputs.
+     */	
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
-    /* Original CipherText */
     unsigned char *cipherorig = "\x5f\x44\x29\xbb\xed\x0c\xbb\xa0\x46\x2f\x1e\xfa\x19\xbd\x7a\x2e\xea\x19\x3f\x50\x35\xb9\xba\x91\xa2\x7e\x85\x37\xb6\x5f\x95\x35";
-    /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
     
+     /*Iniitalise alphabet arrays where user can input choice of position of the first char of the key.
+      * Also take user input for no. of threads
+      */
     char alphabet8[] = "abcdefgphijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
@@ -103,18 +105,16 @@ int main()
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
     char alphabet[40];
     int posn;
- 
-    // Take user input for choice of position of the first char of the key and no. of threads
-	
-    printf("how many threads?\n");
+   
+    printf("How many threads?\n");
     scanf("%d", &nt);
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
     scanf("%d", &posn);
 	
-     start1 = omp_get_wtime( ); 
-     printf("Timer1 started...\n");
+    start1 = omp_get_wtime( ); 
+    printf("Timer1 started...\n");
 	
 
     if (posn ==1)
@@ -166,8 +166,11 @@ int main()
           printf("Total threads - %d\n", nthreads);
         }
 
-   start2 = omp_get_wtime( );
-   printf("Timer2 started...\n");
+       start2 = omp_get_wtime( ); // time the parallel region
+	    if(thread_id == 0) // only want to print this once
+	    {
+            printf("Timer2 started...\n");
+	    }
       
    #pragma omp for schedule(dynamic, chunk) nowait
         
