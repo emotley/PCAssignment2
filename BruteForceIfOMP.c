@@ -10,7 +10,7 @@
 #define CHUNKSIZE 1
 
 
-/* BruteForceIfEnc.c    November 2018
+/* BruteForceOMP.c    November 2018
 *  Program to generate a series of potential keys of up to length k from an alphabet of length n,
 *  then padded to a total of 16 Bytes, where it can then be used to Brute Force a ciphertext using
 *  AES-128-CBC encryption, where the IV is known. */
@@ -75,10 +75,10 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 
 int main()
 {
-    int i,j,k,l,m,n,q, thread_id, nthreads;
+    int i,j,k,l,m,n,q, thread_id, nthreads, count = 0;
     char key[18];
-    int count = 0; 
-    float time_used = 0;   
+    float time_used = 0;
+    int chunk = CHUNKSIZE;
 
 
     /* A 128 bit IV */
@@ -88,7 +88,7 @@ int main()
     /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
     
-    
+    char alphabet8[] = "abcdefgphijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
@@ -96,7 +96,7 @@ int main()
     char alphabet0[] = "abcdef5pghijklmnoqrstuvwxyz012346789";
     char alphabet[40];
     int posn;
-    clock_t end;
+ 
 
     printf("\n*******************************************************************************\n");
     printf("******************************Cipher Key Cracker*******************************\n");
@@ -142,11 +142,9 @@ int main()
     int s = strlen(alphabet);
     printf("\nalphabet: %s\tLength is %d\n", alphabet, s);  
     
-	clock_t start = clock(); // start the timer
-        printf("timer started...\n");
+	clock_t start2 = clock(); // start the timer
+        printf("timer2 started...\n");
 
-
-	int chunk = CHUNKSIZE;
 
      #pragma omp parallel shared(alphabet,count,chunk,start) private(i,j,k,l,m,n,key,ciphertext,thread_id, end)
     {
@@ -161,9 +159,7 @@ int main()
 
 #pragma omp for schedule(dynamic, chunk) nowait
         
-//#pragma omp for collapse (2)  schedule(dynamic, chunk) nowait
-
-    for (i = 0; i< s; ++i)
+   for (i = 0; i< s; ++i)
     {
         for (j = 0; j< s; ++j)
         {
@@ -189,7 +185,7 @@ int main()
 
                             count++;
 
-                            if (count%10000000 == 0)
+                            if (count%25000000 == 0)
                             {
                                printf("count %d  Thread %d is trying key  %s\n", count, thread_id, key);
                             }
@@ -215,8 +211,8 @@ int main()
 
 				
 				end = clock(); // stop the timer
-				time_used = (double)(end - start)/ CLOCKS_PER_SEC/nthreads;
-    				printf("Execution time = %.2lf seconds\n\n", time_used);
+				time_used = (double)(end - start2)/ CLOCKS_PER_SEC/nthreads;
+    				printf("Execution time = %.4lf seconds\n\n", time_used);
 				exit(0);
                              }
 		 }
