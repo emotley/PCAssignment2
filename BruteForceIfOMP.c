@@ -75,11 +75,11 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 
 int main()
 {
-    int i,j,k,l,m,n,q, thread_id, nthreads, count = 0;
+    int i,j,k,l,m,n,q, thread_id, nthreads,nt, count = 0;
     char key[18];
     float time_used = 0;
     int chunk = CHUNKSIZE;
-	double end;
+    double end;
 
 
     /* A 128 bit IV */
@@ -103,7 +103,10 @@ int main()
     printf("******************************Cipher Key Cracker*******************************\n");
     printf("*******************************************************************************\n");
 
-    // Take user input for choice of position of the first char of the key
+    // Take user input for choice of position of the first char of the key and no. of threads
+	
+	printf("how many threads?\n");
+	scanf("%d", &nt);
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
@@ -149,8 +152,7 @@ int main()
 	clock_t start2 = clock(); // note clock reading
         printf("timer2 started...\n");
 
-//#pragma omp parallel ... num_threads(4)
-     #pragma omp parallel shared(alphabet,count,chunk,start2) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(2)
+     #pragma omp parallel shared(alphabet,count,chunk,start2) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(nt)
     {
 	omp_set_dynamic(0);
 	  omp_set_num_threads(2);   
