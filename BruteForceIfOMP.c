@@ -79,7 +79,7 @@ int main()
     char key[18];
     float time_used1 = 0, time_used2 = 0;
     int chunk = CHUNKSIZE;
-    double end;
+    double end, start1, start2;
 	
 	
       
@@ -116,7 +116,7 @@ int main()
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
     scanf("%d", &posn);
 	
-     double start1 = omp_get_wtime( ); 
+     start1 = omp_get_wtime( ); 
      printf("Timer1 started...\n");
 	
 
@@ -157,7 +157,7 @@ int main()
     int s = strlen(alphabet);
     printf("\nalphabet: %s\tLength is %d\n", alphabet, s);  
     	
-     #pragma omp parallel shared(alphabet,count,chunk,start2) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(nt)
+     #pragma omp parallel shared(alphabet,count,chunk,start2, start1) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(nt)
     {
 	  omp_set_dynamic(0);
 	  omp_set_num_threads(2);   
@@ -169,7 +169,7 @@ int main()
           printf("Total threads - %d\n", nthreads);
         }
 
-   double start2 = omp_get_wtime( );
+   start2 = omp_get_wtime( );
    printf("Timer2 started...\n");
       
    #pragma omp for schedule(dynamic, chunk) nowait
@@ -224,7 +224,7 @@ int main()
 				printf("           Found by thread %d.   No of threads: %d\n", thread_id, nthreads);
                                 printf("******************************************************************************\n");
  				
-				double end = omp_get_wtime( );    
+				end = omp_get_wtime( );    
     				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start2, end, end - start2);  
 				printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n", start1, end, end - start1); 
 				
