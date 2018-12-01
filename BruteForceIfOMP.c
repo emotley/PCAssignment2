@@ -80,7 +80,7 @@ int main()
     float time_used1 = 0, time_used2 = 0;
     int chunk = CHUNKSIZE;
     double end;
-	
+	double start1a = omp_get_wtime( );  
 	clock_t start1 = clock(); // note clock reading
         printf("timer1 started...\n");
 
@@ -227,7 +227,7 @@ int main()
  				
 				double end = omp_get_wtime( );    
     				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start, end, end - start);  
-				
+				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start1a, end, end - start1a); 
 				
 				end = clock(); // stop the timer
 				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC;
