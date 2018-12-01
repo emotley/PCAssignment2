@@ -131,7 +131,7 @@ int main()
     
     else if (posn ==8)
     {
-        strcpy(alphabet, alphabet4);
+        strcpy(alphabet, alphabet8);
     }
 	
     else if (posn ==0)
