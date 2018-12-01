@@ -179,7 +179,7 @@ int main()
                             key[16] = '\0';
                             count++;
 
-                            if (count%10000000 == 0) 
+                            if (count%25000000 == 0) 
                             {
                                 printf("count %lu  trying key  %s\n", count, key);
                             }
