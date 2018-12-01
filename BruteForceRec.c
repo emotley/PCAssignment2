@@ -145,7 +145,7 @@ int genKeys(char alphabet[], char prefix[], int s, int k)
 
        else
         {
-           if (genKeys(alphabet, newprefix, n, k-1) == 0)  // continue with recursion if no match
+           if (genKeys(alphabet, newprefix, s, k-1) == 0)  // continue with recursion if no match
             {
                 return 0;
             }
