@@ -226,14 +226,14 @@ int main()
                                 printf("******************************************************************************\n");
  				
 				double end = omp_get_wtime( );    
-    				printf("start = %.16g\nend = %.16g\ndiff = %.16g\n", start, end, end - start);  
+    				printf("OMP start time = %.6g\nend = %.6g\ndOMP exe time = %.4g\n", start, end, end - start);  
 				
 				
 				end = clock(); // stop the timer
-				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC/nthreads;
+				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC/;
     				printf("Execution time = %.4lf seconds\n\n", time_used2);
 				    
-				time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC/nthreads;
+				time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC/;
     				printf("Execution time = %.4lf seconds\n\n", time_used1);    
 				 
 				    
