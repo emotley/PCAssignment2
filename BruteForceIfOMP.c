@@ -226,7 +226,7 @@ int main()
                                 printf("******************************************************************************\n");
  				
 				double end = omp_get_wtime( );    
-    				printf("OMP start time = %.10g\nOMP end time= %.10g\nOMP exe time = %.4g\n", start, end, end - start);  
+    				printf("OMP start time = %.11g\nOMP end time= %.11g\nOMP exe time = %.5g\n", start, end, end - start);  
 				
 				
 				end = clock(); // stop the timer
