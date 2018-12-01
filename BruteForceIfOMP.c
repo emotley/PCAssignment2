@@ -230,10 +230,10 @@ int main()
 				
 				
 				end = clock(); // stop the timer
-				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC/;
+				time_used2 = (double)(end - start2)/ CLOCKS_PER_SEC;
     				printf("Execution time = %.4lf seconds\n\n", time_used2);
 				    
-				time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC/;
+				time_used1 = (double)(end - start1)/ CLOCKS_PER_SEC;
     				printf("Execution time = %.4lf seconds\n\n", time_used1);    
 				 
 				    
