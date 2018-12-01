@@ -163,7 +163,7 @@ int main()
 	if (thread_id ==0)  // get info from master thread
         {
           nthreads = omp_get_num_threads();
-          printf("Total threads - %d\n", nthreads);
+          printf("Total threads = %d\n\n\n", nthreads);
         }
 
        start2 = omp_get_wtime( ); // time the parallel region
