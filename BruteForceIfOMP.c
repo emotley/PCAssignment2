@@ -226,7 +226,7 @@ int main()
                                 printf("******************************************************************************\n");
  				
 				double end = omp_get_wtime( );    
-    				printf_s("start = %.16g\nend = %.16g\ndiff = %.16g\n", start, end, end - start);  
+    				printf("start = %.16g\nend = %.16g\ndiff = %.16g\n", start, end, end - start);  
 				
 				
 				end = clock(); // stop the timer
