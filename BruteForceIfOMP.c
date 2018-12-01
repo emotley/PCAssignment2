@@ -149,7 +149,7 @@ int main()
 	clock_t start2 = clock(); // note clock reading
         printf("timer2 started...\n");
 
-#pragma omp parallel ... num_threads(4)
+//#pragma omp parallel ... num_threads(4)
      #pragma omp parallel shared(alphabet,count,chunk,start2) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(2)
     {
 	omp_set_dynamic(0);
