@@ -116,13 +116,14 @@ int main(int argc, char *argv[])
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    char alphabetMax[] = "abcdefghijklmnoqrstuvwxyz0123456789p";
     char alphabet[40];
     
     if(id ==0)  //only want once process to take the user input
     {
       
     printf("In the search alphabet, what is the position of the first char of the key?\n");
-    printf("Please enter 1,2,3,4 or 8\n");
+    printf("Please enter 1,2,3,4,8 or 36 (36 is last posn of alphabet order and will take max search time\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
      scanf("%d", &posn);
     }
@@ -151,6 +152,10 @@ int main(int argc, char *argv[])
     else if (posn ==8)
     {
         strcpy(alphabet, alphabet8);
+    }
+     else if (posn ==36)
+    {
+        strcpy(alphabet, alphabetMax);
     }
     else if (posn ==0)
     {
