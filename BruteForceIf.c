@@ -9,9 +9,10 @@
 
 
 /* BruteForceIf.c    November 2018
- * Program to generate a series of potential keys using nested if statements, of length 6
- * from an alphabet of length n, then padded to a total of 16 Bytes, where it can then be used 
- * to Brute Force a ciphertext using AES-128-CBC encryption, where the IV is known. */
+ * Serial Program to generate a series of potential keys using nested if statements,
+ * of length 6 (padded to 16B)from an alphabet of length s.
+ * Keys are then successively tried using AES-128-CBC encryption with known IV and plaintext
+ * to produce ciphertext which is tested for match against original ciphertext. */
 
 
 /* Global variables initialised first*/
@@ -29,11 +30,12 @@ void handleErrors(void)
 }
 
 
-/* ***************************************************************
+/* *****************************************************************************************
  *  ENCRYPTION FUNCTION
  *  Takes plaintext and encrypts it using a 128b IV and a 128b key
  *  Returns ciphertext
- *****************************************************************/
+ *  Code based on: https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption
+ ********************************************************************************************/
 
 int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext)
@@ -77,25 +79,25 @@ int main()
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
     printf("********************************************************\n\n");
-	
+
     // First clock started
-     clock_t start1 = clock(); // start the timer
-     printf("timer1 started...\n\n");
-		
-    /* Initialise most of the variables */	
+    clock_t start1 = clock(); // start the timer
+    printf("timer1 started...\n\n");
+
+    /* Initialise most of the variables */
     unsigned long count = 0;
     int i,j,k,l,m,n,q,posn;
     char key[18];
-    
-	
-    /* Hardcoding the IV, Ciphertext and Plaintext. 
+
+
+    /* Hardcoding the IV, Ciphertext and Plaintext.
      * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
      * Program could be modified to be taken as user inputs.
      */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
     unsigned char *cipherorig = "\x5f\x44\x29\xbb\xed\x0c\xbb\xa0\x46\x2f\x1e\xfa\x19\xbd\x7a\x2e\xea\x19\x3f\x50\x35\xb9\xba\x91\xa2\x7e\x85\x37\xb6\x5f\x95\x35";
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
-    
+
     /* Selection of alphabets for user selection for testing purposes. Position of first character of key changes in each. */
     char alphabet8[] = "abcdefgphijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
@@ -103,8 +105,10 @@ int main()
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    char alphabetMax[] = "abcdefghijklmnoqrstuvwxyz0123456789p";
+    char alphabetF[] = "abcdefghijklmnoqrstuvwxyz0123456789A";
     char alphabet[40];
-   
+
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
@@ -128,12 +132,19 @@ int main()
     {
         strcpy(alphabet, alphabet4);
     }
-    
+
     else if (posn ==8)
     {
         strcpy(alphabet, alphabet8);
     }
-	
+    else if (posn ==36)
+    {
+        strcpy(alphabet, alphabetMax);
+    }
+    else if (posn ==99)
+    {
+        strcpy(alphabet, alphabetF);
+    }
     else if (posn ==0)
     {
         strcpy(alphabet, alphabet0);
@@ -145,15 +156,15 @@ int main()
         return 1; //exit program
     }
 
-    int s = strlen(alphabet); // now alphabet is chosen can initialise s.	
+    int s = strlen(alphabet); // now alphabet is chosen can initialise s.
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     printf("\nlength of alphabet: %d\n",s);
 
-    clock_t start2 = clock(); // start the timer for execution time of main process 
+    clock_t start2 = clock(); // start the timer for execution time of main process
     printf("timer2 started...\n\n");
 
-/* Everything is now initialised, so the process of generating keys and encryption with those keys can begin */
-    
+    /* Everything is now initialised, so the process of generating keys and encryption with those keys can begin */
+
     for (i = 0; i< s; i++)
     {
         for (j = 0; j< s; j++)
@@ -176,10 +187,10 @@ int main()
                             {
                                 key[q] = '#';
                             }
-                            key[16] = '\0';
+                            key[16] = '\0';  // add null terminator for end of string
                             count++;
 
-                            if (count%25000000 == 0) 
+                            if (count%25000000 == 0) // only print certain attempts
                             {
                                 printf("count %lu  trying key  %s\n", count, key);
                             }
@@ -200,16 +211,16 @@ int main()
                                 printf("Success!! The key is  %s\n\n", key);
                                 printf("***************************************************\n");
 
-				
-				clock_t end = clock(); // stop the timer
-				float time_used1 = (float)(end - start1)/ CLOCKS_PER_SEC;
-				float time_used2 = (float)(end - start2)/ CLOCKS_PER_SEC;    
-				    
-    				printf("Execution time of full program = %.4lf seconds\n", time_used1);
+                                clock_t end = clock(); // stop the timer
+                                float time_used1 = (float)(end - start1)/ CLOCKS_PER_SEC;
+                                float time_used2 = (float)(end - start2)/ CLOCKS_PER_SEC;
+
+                                printf("Execution time of full program = %.4lf seconds\n", time_used1);
                                 printf("Execution time of logical process = %.4lf seconds\n\n", time_used2);
+                                printf("*************End of Program************\n\n")
+
                                 return(0);
                             }
-
                         }
                     }
                 }
@@ -220,6 +231,6 @@ int main()
     clock_t end = clock(); // stop the timer
     float time_used = (float)(end - start1)/ CLOCKS_PER_SEC;
     printf("Execution time = %.4lf seconds\n\n", time_used);
-
+    printf("*************End of Program************\n\n")
     return 0;
 }
