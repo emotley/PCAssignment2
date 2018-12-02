@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
    {
    
     printf("\n********************************************************\n");
-    printf("******************Cipher Cracker**********************\n");
+    printf("*************Cipher Cracker  MPI version****************\n");
     printf("********************************************************\n");
    }
     
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
     char alphabet[40];
     
-    if(id ==0)
+    if(id ==0)  //only want once process to take the user input
     {
       
     printf("In the search alphabet, what is the position of the first char of the key?\n");
@@ -125,10 +125,9 @@ int main(int argc, char *argv[])
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
      scanf("%d", &posn);
     }
+      MPI_Bcast(&posn, 1, MPI_INT, 0, MPI_COMM_WORLD); //input is then broadcast to all processes
     
-    MPI_Bcast(&posn, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    
-    start1 = MPI_Wtime();
+    start1 = MPI_Wme();
     
    if (posn ==1)
     {
@@ -157,16 +156,16 @@ int main(int argc, char *argv[])
         strcpy(alphabet, alphabet0);
     }
 
-   // else
-   // {
-   // printf ("Not a valid input. Run program again\n");
-   // return 1; //exit program
-   // }
-     
+    else
+    {
+if (id ==0)
+{
+    printf ("Not a valid input. Run program again\n");
+}
+    return 1; //exit program
+    }
     
-    
-     
-    int s = strlen(alphabet);
+    int s = strlen(alphabet); // can now initialise alphabet length
     
   if(id==0)
   {
@@ -174,15 +173,9 @@ int main(int argc, char *argv[])
     printf("\nlength of alphabet: %d\n",s);
     printf("timer started...\n\n");
    }
-    
-    
-    
-    
-    
+  
     start2 = MPI_Wtime();
-    
-    clock_t start = clock(); // start the timer
-    
+      
     // divide outer loop between no. of processes
     for (i = id; i < s; i = i+procs)
      {
@@ -228,17 +221,13 @@ int main(int argc, char *argv[])
                                 printf("Count %lu Cipherorig and Ciphertext match\n", count);
                                 printf("***************************************************\n\n");
                                 printf("Success!! The key is  %s\n\n", key);
+                                printf("Key found by process %d, Total processes used = %d\n", id, procs);
                                 printf("***************************************************\n");
-
 
                                 end1 = MPI_Wtime();
                                 printf( "\nMain prog elapsed time is %f\n", end1 - start1 ); 
                                 printf( "Main prog elapsed time is %f\n", end1 - start2 ); 
-                                
-                                
-                                clock_t end = clock(); // stop the timer
-                                float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
-                                printf("Execution time = %.4lf seconds\n\n", time_used);
+                                                 
                                 return(0);  // exit the for loops
                                                      
                             }
@@ -250,12 +239,15 @@ int main(int argc, char *argv[])
         }
     }
 
-
+end1 = MPI_Wtime();
+    if(id == 0)
+    {
+        printf("Sorry, no solutions found :(");
+                                printf( "\nMain prog elapsed time is %f\n", end1 - start1 ); 
+    }
     MPI_Finalize();
 
-    clock_t end = clock(); // stop the timer
-    float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
-    printf("Execution time = %.4lf seconds\n\n", time_used);
+   
 
     return 0;
 }
