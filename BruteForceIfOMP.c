@@ -234,7 +234,7 @@ int main()
                                     end = omp_get_wtime( );
                                     printf("OMP start time = %.11g\tOMP end time= %.11g\nOMP exe time = %.5g\n\n", start2, end, end - start2);
                                     printf("Main prog start time = %.11g\tEnd time= %.11g\nProg exe time = %.5g\n\n", start1, end, end - start1);
-
+                                    printf("**************************End of program**************************************\n\n");
                                     exit(0);  // can't use return statements in OMP, so have to exit
                                 }
                             }
@@ -244,9 +244,10 @@ int main()
             }
         }
     }
-    printf("No key found\n");
+    printf("Sorry, no key found :((  \n");
     double end2 = omp_get_wtime( );
-    printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n", start1, end2, end2 - start1);
+    printf("Main prog start time = %.11g\nEnd time= %.11g\nProg exe time = %.5g\n\n", start1, end2, end2 - start1);
+    printf("**************************End of program**************************************\n\n");
 
     return 0;
 }
