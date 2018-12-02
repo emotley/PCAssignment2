@@ -175,8 +175,9 @@ if (id ==0)
     
   if(id==0)
   {
-    printf("\nalphabet: %s", alphabet);  // print chosen alphabet
-    printf("\nlength of alphabet: %d\n",s);
+    printf("\nalphabet: %s\n", alphabet);  // print chosen alphabet
+    printf("length of alphabet: %d\n",s);
+    printf("No. of processes is %d\n", procs);
     printf("timer started...\n\n");
    }
   
