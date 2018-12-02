@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     }
     
     unsigned long count = 0;
-    int i,j,k,l,m,n,q;
+    int i,j,k,l,m,n,q, posn;
     char key[18];
     
     /* Hardcoding the IV, Ciphertext and Plaintext.
