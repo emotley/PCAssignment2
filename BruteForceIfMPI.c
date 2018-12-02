@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
     
     unsigned long count = 0;
     int i,j,k,l,m,n,q, posn;
-    char key[18];
-     double start1, start2, end1, end2;
+     char key[18];
+     double start1, start2, end1;
     
     /* Hardcoding the IV, Ciphertext and Plaintext.
      * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
@@ -103,7 +103,8 @@ int main(int argc, char *argv[])
      */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
     unsigned char *cipherorig = "\x5f\x44\x29\xbb\xed\x0c\xbb\xa0\x46\x2f\x1e\xfa\x19\xbd\x7a\x2e\xea\x19\x3f\x50\x35\xb9\xba\x91\xa2\x7e\x85\x37\xb6\x5f\x95\x35";
-    unsigned char *plaintext = (unsigned char *)"This is a secret message.";
+   // unsigned char *plaintext = (unsigned char *)"This is a secret message.";
+     unsigned char *plaintext = (unsigned char *)"Thus is a secret message.";
 
     
     /*Iniitalise alphabet arrays where user can input choice of position of the first char of the key.
