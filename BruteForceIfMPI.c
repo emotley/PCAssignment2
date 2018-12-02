@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     unsigned long count = 0;
     int i,j,k,l,m,n,q, posn;
     char key[18];
-     double start1, start2, end1, end2,
+     double start1, start2, end1, end2;
     
     /* Hardcoding the IV, Ciphertext and Plaintext.
      * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     
     MPI_Bcast(&posn, 1, MPI_INT, 0, MPI_COMM_WORLD);
     
-    start1 = MPI_Wtime()
+    start1 = MPI_Wtime();
     
    if (posn ==1)
     {
@@ -179,7 +179,7 @@ int main(int argc, char *argv[])
     
     
     
-    start2 = MPI_Wtime()
+    start2 = MPI_Wtime();
     
     clock_t start = clock(); // start the timer
     
