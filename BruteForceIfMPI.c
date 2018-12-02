@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789"; // default order
-    char alphabetF[] = "abcdefghijklmnopqrstuvwxyz0123456789A"; // key can't be found using this alphabet (no 'p')
+    char alphabetF[] = "abcdefghijklmnoqrstuvwxyz0123456789A"; // key can't be found using this alphabet (no 'p')
 
     char alphabet[40];
 
