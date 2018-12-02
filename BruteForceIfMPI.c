@@ -78,7 +78,7 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 int main(int argc, char *argv[])
 {
     
-     int id, procs;
+    int id, procs;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank (MPI_COMM_WORLD, &id);
     MPI_Comm_size (MPI_COMM_WORLD, &procs);
@@ -95,6 +95,7 @@ int main(int argc, char *argv[])
     unsigned long count = 0;
     int i,j,k,l,m,n,q, posn;
     char key[18];
+     double start1, start2, end1, end2,
     
     /* Hardcoding the IV, Ciphertext and Plaintext.
      * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
@@ -127,7 +128,7 @@ int main(int argc, char *argv[])
     
     MPI_Bcast(&posn, 1, MPI_INT, 0, MPI_COMM_WORLD);
     
-    
+    start1 = MPI_Wtime()
     
    if (posn ==1)
     {
@@ -178,7 +179,7 @@ int main(int argc, char *argv[])
     
     
     
-    
+    start2 = MPI_Wtime()
     
     clock_t start = clock(); // start the timer
     
@@ -230,6 +231,11 @@ int main(int argc, char *argv[])
                                 printf("***************************************************\n");
 
 
+                                end1 = MPI_Wtime();
+                                printf( "\nMain prog elapsed time is %f\n", end1 - start1 ); 
+                                printf( "Main prog elapsed time is %f\n", end1 - start2 ); 
+                                
+                                
                                 clock_t end = clock(); // stop the timer
                                 float time_used = (float)(end - start)/ CLOCKS_PER_SEC;
                                 printf("Execution time = %.4lf seconds\n\n", time_used);
