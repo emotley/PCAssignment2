@@ -9,7 +9,7 @@
 #include <mpi.h>
 
 
-/* BruteForceMPI2.c    November 2018
+/* BruteForceMPI.c    November 2018
  * Program using distributed memory parallelization (MPI)to generate a series of potential keys
  * using nested if statements, of length 6 (padded to 16B)from an alphabet of length n.
  * Keys are then sucessively tried using AES-128-CBC encryption with known IV and resultant ciphertext,
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 {
     
     
- int id, procs;
+    int id, procs;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank (MPI_COMM_WORLD, &id);
     MPI_Comm_size (MPI_COMM_WORLD, &procs);
@@ -87,35 +87,85 @@ int main(int argc, char *argv[])
     
     if(id ==0) // only process 0 prints the header
     {
-    
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
     printf("********************************************************\n");
-    
     }
-    
     
     unsigned long count = 0;
     int i,j,k,l,m,n,q;
     char key[18];
-    int solutions;
-    int global_solutions;
     
-    
-    /* A 128 bit IV */
+    /* Hardcoding the IV, Ciphertext and Plaintext.
+     * Ciphertext previously obtained by encrypting the plaintext using command line AES cbc encryption.
+     * Program could be modified to be taken as user inputs.
+     */
     unsigned char *iv = (unsigned char *)"\xaa\xbb\xcc\xdd\xee\xff\x00\x99\x88\x77\x66\x55\x44\x33\x22\x11";
-    /* Original CipherText */
     unsigned char *cipherorig = "\x5f\x44\x29\xbb\xed\x0c\xbb\xa0\x46\x2f\x1e\xfa\x19\xbd\x7a\x2e\xea\x19\x3f\x50\x35\xb9\xba\x91\xa2\x7e\x85\x37\xb6\x5f\x95\x35";
-    /* Message to be encrypted */
     unsigned char *plaintext = (unsigned char *)"This is a secret message.";
 
-    char alphabet[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    
+    /*Iniitalise alphabet arrays where user can input choice of position of the first char of the key.
+     * Also take user input for no. of threads
+     */
+    char alphabet8[] = "abcdefgphijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
-    char alphabet0[] = "abcdefghipjklmnoqrstuvwxyz0123456789";
-    //char alphabet[40];
+    char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    char alphabet[40];
+    
+    
+      if(id ==0) // only process 0 prints the header
+    {
+    printf("In the search alphabet, what is the position of the first char of the key?\n");
+    printf("Please enter 1,2,3,4 or 8\n");
+    printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
+      }
+    
+    
+    scanf("%d", &posn);
+    
+   if (posn ==1)
+    {
+        strcpy(alphabet, alphabet1);
+    }
+    else if (posn ==2)
+    {
+        strcpy(alphabet, alphabet2);
+    }
+
+    else if (posn ==3)
+    {
+        strcpy(alphabet, alphabet3);
+    }
+
+    else if (posn ==4)
+    {
+        strcpy(alphabet, alphabet4);
+    }
+    else if (posn ==8)
+    {
+        strcpy(alphabet, alphabet8);
+    }
+    else if (posn ==0)
+    {
+        strcpy(alphabet, alphabet0);
+    }
+
+    else
+    {
+        printf ("Not a valid input. Run program again\n");
+        return 1; //exit program
+    }
+ 
+    
+    
+    
+    
+    
+    
     
     int s = strlen(alphabet);
     
