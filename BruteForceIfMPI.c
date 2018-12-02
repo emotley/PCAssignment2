@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     }
       MPI_Bcast(&posn, 1, MPI_INT, 0, MPI_COMM_WORLD); //input is then broadcast to all processes
     
-    start1 = MPI_Wme();
+    start1 = MPI_Wtime();
     
    if (posn ==1)
     {
