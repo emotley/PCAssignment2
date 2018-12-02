@@ -81,12 +81,12 @@ int main(int argc, char *argv[])
     
    
     
-    if(id ==0) // only process 0 prints the header
-    {
+   
+   
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
     printf("********************************************************\n");
-    }
+   
     
     unsigned long count = 0;
     int i,j,k,l,m,n,q, posn;
