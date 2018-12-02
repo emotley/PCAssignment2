@@ -209,7 +209,8 @@ int main(int argc, char *argv[])
                             key[16] = '\0';        // add null terminator for end of string
                             count++;
 
-                            if (id == 0 && count%25000000 == 0)  // print attempts for process 0 only
+                           // if (id == 0 && count%25000000 == 0)  // print certain attempts for process 0 only
+                            if (count%25000000 == 0) // print certain attempts for all processes
                             {
                                 printf("Process %d  trying key  %s\n", id, key);
                             }
