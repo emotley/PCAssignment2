@@ -233,7 +233,8 @@ int main(int argc, char *argv[])
 
                                 end1 = MPI_Wtime();
                                 printf( "\nMain prog elapsed time is %f\n", end1 - start1 );
-                                printf( "Parallel section elapsed time is %f\n", end1 - start2 );
+                                printf("Parallel section elapsed time is %f\n\n", end1 - start2 );
+                                printf("**************end of program*******************\n\n");
 
                                 return(0);  // exit the for loops
                             }
