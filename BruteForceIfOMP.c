@@ -164,7 +164,7 @@ int main()
     #pragma omp parallel shared(alphabet,count,chunk,start2, start1) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(nt)
     {
         omp_set_dynamic(0);
-        omp_set_num_threads();
+        //omp_set_num_threads();
         thread_id = omp_get_thread_num();
 
         if (thread_id ==0)  // get info from master thread
