@@ -10,10 +10,12 @@
 #define CHUNKSIZE 1
 
 
-/* BruteForceOMP.c    November 2018
-*  Program to generate a series of potential keys of up to length k from an alphabet of length n,
-*  then padded to a total of 16 Bytes, where it can then be used to Brute Force a ciphertext using
-*  AES-128-CBC encryption, where the IV is known. */
+/* BruteForceIfOMP.c    November 2018
+ * Program using shared memory parallelization (OpenMP)to generate a series of potential keys
+ * using nested if statements, of length 6 (padded to 16B)from an alphabet of length n.
+ * Keys are then successively tried using AES-128-CBC encryption with known IV and plaintext to 
+ * produce ciphertext which is tested for match against original ciphertext.
+ */
 
 
 /* initialise global variables*/
@@ -28,11 +30,12 @@ void handleErrors(void)
     abort();
 }
 
-/* ***************************************************************
+/* *********************************************************************************************
  *  ENCRYPTION FUNCTION
  *  Takes plaintext and encrypts it using a 128b IV and a 128b key
  *  Returns ciphertext
- *****************************************************************/
+ *  Code based on: https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption
+ ***********************************************************************************************/
 
 int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext)
@@ -54,19 +57,18 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
         handleErrors();
     ciphertext_len = len;
 
-    /* Finalise the encryption. Further ciphertext bytes may be written at
-     * this stage.
+    /* Finalise the encryption. 
+     *  Further ciphertext bytes may be written at this stage.
      */
     if(1 != EVP_EncryptFinal_ex(ctx, ciphertext + len, &len))
         handleErrors();
-    ciphertext_len += len;
+        ciphertext_len += len;
 
     /* Clean up */
     EVP_CIPHER_CTX_free(ctx);
 
     return ciphertext_len;
 }
-
 
 
 /* ***********************************************************************
@@ -82,7 +84,7 @@ int main()
     /* Initialise variables */
     int i,j,k,l,m,n,q, thread_id, nthreads,nt, count = 0;
     char key[18];
-    float time_used1 = 0, time_used2 = 0;
+    //float time_used1 = 0, time_used2 = 0;
     int chunk = CHUNKSIZE;
     double end, start1, start2;
 
@@ -97,21 +99,23 @@ int main()
     /*Iniitalise alphabet arrays where user can input choice of position of the first char of the key.
      * Also take user input for no. of threads
      */
+    char alphabetMax[] = "abcdefghijklmnoqrstuvwxyz0123456789p";
     char alphabet8[] = "abcdefgphijklmnoqrstuvwxyz0123456789";
     char alphabet4[] = "abcpdefghijklmnoqrstuvwxyz0123456789";
     char alphabet3[] = "abpcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet2[] = "apbcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet1[] = "pabcdefghijklmnoqrstuvwxyz0123456789";
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    char alphabetF[] = "abcdefghijklmnoqrstuvwxyz0123456789A";
     char alphabet[40];
     int posn;
 
     printf("How many threads?\n");
     scanf("%d", &nt);
-    printf("In the search alphabet, what is the position of the first char of the key?\n");
-    printf("Please enter 1,2,3,4 or 8\n");
-    printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
-    scanf("%d", &posn);
+     printf("In the search alphabet, what is the position of the first char of the key?\n");
+     printf("Please enter 1,2,3,4,8 or 36 (36 is last posn of alphabet order and will take max search time\n");
+     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9   or 99 for 'no success' search\n" );
+     scanf("%d", &posn);
 
     start1 = omp_get_wtime( );
     printf("Timer1 started...\n");
@@ -125,12 +129,10 @@ int main()
     {
         strcpy(alphabet, alphabet2);
     }
-
     else if (posn ==3)
     {
         strcpy(alphabet, alphabet3);
     }
-
     else if (posn ==4)
     {
         strcpy(alphabet, alphabet4);
@@ -139,25 +141,30 @@ int main()
     {
         strcpy(alphabet, alphabet8);
     }
+    else if (posn ==36)
+    {
+        strcpy(alphabet, alphabetMax);
+    }
     else if (posn ==0)
     {
         strcpy(alphabet, alphabet0);
     }
-
+    else if (posn ==99)
+    {
+        strcpy(alphabet, alphabetF);
+    }
     else
     {
         printf ("Not a valid input. Run program again\n");
         return 1; //exit program
     }
-
-
     int s = strlen(alphabet);
     printf("\nalphabet: %s\tLength is %d\n", alphabet, s);
 
     #pragma omp parallel shared(alphabet,count,chunk,start2, start1) private(i,j,k,l,m,n,key,ciphertext,thread_id, end) num_threads(nt)
     {
         omp_set_dynamic(0);
-        omp_set_num_threads(2);
+        omp_set_num_threads();
         thread_id = omp_get_thread_num();
 
         if (thread_id ==0)  // get info from master thread
