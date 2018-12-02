@@ -154,11 +154,11 @@ int main(int argc, char *argv[])
         strcpy(alphabet, alphabet0);
     }
 
-    else
-    {
-        printf ("Not a valid input. Run program again\n");
-        return 1; //exit program
-    }
+  //  else
+  //  {
+     //  printf ("Not a valid input. Run program again\n");
+      //  return 1; //exit program
+  //  }
  
     
     
