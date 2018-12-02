@@ -79,11 +79,7 @@ int main(int argc, char *argv[])
 {
     
     
-    int id, procs;
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank (MPI_COMM_WORLD, &id);
-    MPI_Comm_size (MPI_COMM_WORLD, &procs);
-    
+   
     
     if(id ==0) // only process 0 prints the header
     {
@@ -117,12 +113,11 @@ int main(int argc, char *argv[])
     char alphabet[40];
     
     
-      if(id ==0) // only process 0 prints the header
-    {
+      
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
-      }
+     
     
     
     scanf("%d", &posn);
@@ -154,27 +149,30 @@ int main(int argc, char *argv[])
         strcpy(alphabet, alphabet0);
     }
 
-  //  else
-  //  {
-     //  printf ("Not a valid input. Run program again\n");
-      //  return 1; //exit program
-  //  }
- 
-    
-    
-    
-    
-    
-    
-    
+    else
+    {
+    printf ("Not a valid input. Run program again\n");
+    return 1; //exit program
+    }
+     
+     
     int s = strlen(alphabet);
     
-    if(id ==0) // only process 0 prints the alphabet
-    {
+  
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     printf("\nlength of alphabet: %d\n",s);
     printf("timer started...\n\n");
-    }
+    
+    
+    
+     int id, procs;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank (MPI_COMM_WORLD, &id);
+    MPI_Comm_size (MPI_COMM_WORLD, &procs);
+    
+    
+    
+    
     
     clock_t start = clock(); // start the timer
     
