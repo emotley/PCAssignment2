@@ -122,10 +122,8 @@ int main(int argc, char *argv[])
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
+     scanf("%d", &posn);
     }
-    
-    
-    scanf("%d", &posn);
     
     MPI_Bcast(&posn, 1, MPI_INT, 0, MPI_COMM_WORLD);
     
