@@ -78,15 +78,19 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 int main(int argc, char *argv[])
 {
     
-    
+     int id, procs;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank (MPI_COMM_WORLD, &id);
+    MPI_Comm_size (MPI_COMM_WORLD, &procs);
    
     
-   
+   if (id ==0)
+   {
    
     printf("\n********************************************************\n");
     printf("******************Cipher Cracker**********************\n");
     printf("********************************************************\n");
-   
+   }
     
     unsigned long count = 0;
     int i,j,k,l,m,n,q, posn;
@@ -112,15 +116,20 @@ int main(int argc, char *argv[])
     char alphabet0[] = "abcdefghijklmnopqrstuvwxyz0123456789";
     char alphabet[40];
     
-    
+    if(id ==0)
+    {
       
     printf("In the search alphabet, what is the position of the first char of the key?\n");
     printf("Please enter 1,2,3,4 or 8\n");
     printf("If position not known, enter 0 for standard alphabet order: a-z,0-9 \n" );
-     
+    }
     
     
     scanf("%d", &posn);
+    
+    MPI_Bcast(&posn, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    
+    
     
    if (posn ==1)
     {
@@ -149,26 +158,25 @@ int main(int argc, char *argv[])
         strcpy(alphabet, alphabet0);
     }
 
-    else
-    {
-    printf ("Not a valid input. Run program again\n");
-    return 1; //exit program
-    }
+   // else
+   // {
+   // printf ("Not a valid input. Run program again\n");
+   // return 1; //exit program
+   // }
      
+    
+    
      
     int s = strlen(alphabet);
     
-  
+  if(id==0)
+  {
     printf("\nalphabet: %s", alphabet);  // print chosen alphabet
     printf("\nlength of alphabet: %d\n",s);
     printf("timer started...\n\n");
+   }
     
     
-    
-     int id, procs;
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank (MPI_COMM_WORLD, &id);
-    MPI_Comm_size (MPI_COMM_WORLD, &procs);
     
     
     
