@@ -217,7 +217,7 @@ int main()
 
                                 printf("Execution time of full program = %.4lf seconds\n", time_used1);
                                 printf("Execution time of logical process = %.4lf seconds\n\n", time_used2);
-                                printf("*************End of Program************\n\n")
+                                printf("*************End of Program************\n\n");
 
                                 return(0);
                             }
