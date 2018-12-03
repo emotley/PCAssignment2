@@ -250,6 +250,7 @@ int main(int argc, char *argv[])
     {
         printf("Sorry, no solutions found :(");
         printf( "\nMain prog elapsed time is %f\n", end1 - start1 );
+        printf(Process 1's count is %lu ", count);
     }
     MPI_Finalize();
 
