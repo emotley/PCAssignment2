@@ -231,6 +231,6 @@ int main()
     clock_t end = clock(); // stop the timer
     float time_used = (float)(end - start1)/ CLOCKS_PER_SEC;
     printf("Execution time = %.4lf seconds\n\n", time_used);
-    printf("*************End of Program************\n\n")
+    printf("*************End of Program************\n\n");
     return 0;
 }
