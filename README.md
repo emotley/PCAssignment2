@@ -2,8 +2,11 @@
 Parallel Computing Assignment 2 - Brute Force attacks
 
 BruteForceIf.c  serial version of bruteforce attack using nested if statements
+
 BruteForceIf2.c serial version of bruteforce attack using recursive function call
+
 BruteForceIfOMP.c  OMP parallelization using outer loop of nested if statements
+
 BruteForceIfMPI.c  MPI parallalization using outer loop of nested if statements
 
 
