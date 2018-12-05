@@ -10,7 +10,10 @@ BruteForceIfOMP.c  OMP parallelization using outer loop of nested if statements
 BruteForceIfMPI.c  MPI parallalization using outer loop of nested if statements
 
 
-makefiles are included for compilation of the programs. Please execute the makefiles and run as follows:
+makefiles are included for compilation of the programs. 
+Please execute the makefiles and run as follows:
+
+
 1. Serial program using nested if statements:
 
 make -f Serial
