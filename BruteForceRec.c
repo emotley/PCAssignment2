@@ -6,10 +6,10 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <string.h>
-//#define MAXCHAR 1000
 
 
-/* BruteForceEnc1.c    November 2018
+
+/* BruteForceRec.c    November 2018
 *  Program to generate a series of potential keys using a recursive function, of up to length k 
 *  from an alphabet of length n, then padded to a total of 16 Bytes, where it can then be used 
 *   to crack a ciphertext by Brute Force using  AES-128-CBC encryption, where the IV is known. */
@@ -174,7 +174,7 @@ int main()
     int posn;
 
     printf("\n********************************************************\n");
-    printf("******************Cipher Key Cracker********************\n");
+    printf("*****Cipher Key Cracker (Recursive Function version*****\n");
     printf("********************************************************\n");
 
    	
