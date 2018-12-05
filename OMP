@@ -1,6 +1,6 @@
 #build an executable named myprog from myprog.c
 all: BruteForceIfOMP.c 
-	gcc -g -o BruteOMP BruteForceIf.c -lcrypto -fopenmp
+	gcc -g -o BruteOMP BruteForceIfOMP.c -lcrypto -fopenmp
 
 clean: 
 	$(RM) BruteOMP
