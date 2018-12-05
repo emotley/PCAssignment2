@@ -227,7 +227,7 @@ int main()
             }
         }
     }
-    printf("Sorry, no matching key found.\n");
+    printf("Sorry, no matching key found :(.\n");
     clock_t end = clock(); // stop the timer
     float time_used = (float)(end - start1)/ CLOCKS_PER_SEC;
     printf("Execution time = %.4lf seconds. Total count = %lu\n\n", time_used, count);
