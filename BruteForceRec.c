@@ -174,7 +174,7 @@ int main()
     int posn;
 
     printf("\n********************************************************\n");
-    printf("*****Cipher Key Cracker (Recursive Function version*****\n");
+    printf("****Cipher Key Cracker (Recursive Function version)*****\n");
     printf("********************************************************\n");
 
    	
