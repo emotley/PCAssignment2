@@ -27,7 +27,7 @@ make -f Serial2
 
 make -f OMP
 
-./BruteSerial
+./BruteOMP
 
 
 4. MPI parallelized version of nested if serial version:
