@@ -1,0 +1,6 @@
+#build an executable named myprog from myprog.c
+all: BruteForceRec.c 
+	gcc -g -o BruteSerial2 BruteForceRec.c -lcrypto
+
+clean: 
+	$(RM) BruteSerial2
